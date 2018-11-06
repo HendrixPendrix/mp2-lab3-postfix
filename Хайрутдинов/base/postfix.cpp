@@ -49,36 +49,37 @@ void TPostfix::SetInfix(string _infix, int _count)
 
 double TPostfix::Calculate(int _count, double *arg)
 {
-	if (count != _count)
-		throw "error";
-	TStack<double> oper(postfix.size());
-	double tmp1;
-	double tmp2;
-	int j = 0;
-	for (int i = 0; i < postfix.size(); i++)
-	{
-		if (IsOperations(postfix[i])==false && j < count)
-		{
-			oper.Push(arg[j]);
-			j++;
-		}
-		else if (IsOperations(postfix[i]))
-		{
+	//if (count != _count)
+	//	throw "error";
+	//TStack<double> oper(postfix.size());
+	//double tmp1;
+	//double tmp2;
+	//int j = 0;
+	//for (int i = 0; i < postfix.size(); i++)
+	//{
+	//	if (IsOperations(postfix[i])==false && j < count)
+	//	{
+	//		oper.Push(arg[j]);
+	//		j++;
+	//	}
+	//	else if (IsOperations(postfix[i]))
+	//	{
 
-			tmp1 = oper.Pop();
-			oper.Pop();
-			tmp2 = oper.Pop();
-			oper.Pop();
-			switch (postfix[i])
-			{
-			case '+':oper.Push(tmp1 + tmp2);
-			case '-':oper.Push(tmp2 - tmp1);
-			case '/':oper.Push(tmp2 / tmp1);
-			case '*':oper.Push(tmp2 * tmp1);
-			}
-		}
-	}
-	return oper.Pop();
+	//		tmp1 = oper.Pop();
+	//		oper.Pop();
+	//		tmp2 = oper.Pop();
+	//		oper.Pop();
+	//		switch (postfix[i])
+	//		{
+	//		case '+':oper.Push(tmp1 + tmp2);
+	//		case '-':oper.Push(tmp2 - tmp1);
+	//		case '/':oper.Push(tmp2 / tmp1);
+	//		case '*':oper.Push(tmp2 * tmp1);
+	//		}
+	//	}
+	//}
+	//return oper.Pop();
+	return 0;
 }
 
 int TPostfix::Compare(char tmp1)
