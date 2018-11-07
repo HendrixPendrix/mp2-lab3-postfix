@@ -57,17 +57,3 @@ TEST(TPostfix, can_calculate)
 {
 	ASSERT_NO_THROW(TPostfix p);
 }
-TEST(TPostfix, the_postfix_form_can_calculate_with_repeat_symbols)
-{
-	TPostfix str("(a+b*a)/a-b");
-	str.ToPostfix();
-	EXPECT_EQ(1, str.Calculate());
-	/*Enter a=2 b=3*/
-}
-TEST(TPostfix, the_postfix_form_can_calculate_without_repeat_symbols)
-{
-	TPostfix str("a+b");
-	str.ToPostfix();
-	EXPECT_EQ(5, str.Calculate());
-	/*Enter a=2 b=3*/
-}
