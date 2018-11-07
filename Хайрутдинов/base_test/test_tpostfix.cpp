@@ -53,17 +53,3 @@ TEST(TPostfix, cant_create_postfix_with_incorrectinfix)
 	TPostfix p("a++b");
 	ASSERT_ANY_THROW(p.ToPostfix());
 }
-//TEST(TPostfix, can_calculate_postfix)
-//{
-//	TPostfix p("a*b");
-//	p.ToPostfix();
-//	double tmp[2] = { 3,3 };
-//	EXPECT_EQ(9, p.Calculate(2, tmp));
-//}
-//TEST(TPostfix, cant_calculate_postfix_without_right_count)
-//{
-//	TPostfix p("a+b");
-//	p.ToPostfix();
-//	double tmp[2] = { 2,2 };
-//	ASSERT_ANY_THROW(p.Calculate(1, tmp));
-//}

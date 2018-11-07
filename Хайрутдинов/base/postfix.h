@@ -24,11 +24,11 @@ public:
 	{
 		infix = str;
 	}
-	void SetInfix(string _infix, int _count);
+	void SetInfix(string _infix);
 	string GetInfix() { return infix; }
 	string GetPostfix() { return postfix; }
 	void ToPostfix();
-	double Calculate(int _count, double *_arg); // Ввод переменных, вычисление по постфиксной форме
+	double Calculate(); // Ввод переменных, вычисление по постфиксной форме
 
 };
 

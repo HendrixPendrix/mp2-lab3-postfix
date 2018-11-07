@@ -1,5 +1,7 @@
 ﻿#include "postfix.h"
 #include "stack.h"
+#include "iostream"
+#include "vector"
 
 void TPostfix::ToPostfix()
 {
@@ -9,7 +11,7 @@ void TPostfix::ToPostfix()
 	postfix = "";
 	for (int i = 0; i < infix.size(); i++)
 	{
-		if (IsOperations(infix[i]) == false)
+		if (IsOperand(infix[i]) == true)
 		{
 			postfix += infix[i];
 		}
@@ -41,44 +43,34 @@ void TPostfix::ToPostfix()
 		postfix += op.Pop();
 }
 
-void TPostfix::SetInfix(string _infix, int _count)
+void TPostfix::SetInfix(string _infix)
 {
 	infix = _infix;
-	count = _count;
 }
 
-double TPostfix::Calculate(int _count, double *arg)
+double TPostfix::Calculate()
 {
-	//if (count != _count)
-	//	throw "error";
-	//TStack<double> oper(postfix.size());
-	//double tmp1;
-	//double tmp2;
-	//int j = 0;
-	//for (int i = 0; i < postfix.size(); i++)
-	//{
-	//	if (IsOperations(postfix[i])==false && j < count)
-	//	{
-	//		oper.Push(arg[j]);
-	//		j++;
-	//	}
-	//	else if (IsOperations(postfix[i]))
-	//	{
-
-	//		tmp1 = oper.Pop();
-	//		oper.Pop();
-	//		tmp2 = oper.Pop();
-	//		oper.Pop();
-	//		switch (postfix[i])
-	//		{
-	//		case '+':oper.Push(tmp1 + tmp2);
-	//		case '-':oper.Push(tmp2 - tmp1);
-	//		case '/':oper.Push(tmp2 / tmp1);
-	//		case '*':oper.Push(tmp2 * tmp1);
-	//		}
-	//	}
-	//}
-	//return oper.Pop();
+	TStack<double> value(postfix.size());
+	vector < double> nums;
+	vector <char> sym;
+	double tmp;
+	for (int i = 0; i < postfix.size(); i++)
+	{
+		if (IsOperand(infix[i]))
+		{
+			for (int j = 0; j < sym.size(); j++)
+			{
+				if (postfix[i] != sym[j])
+				{
+					sym.push_back(postfix[i]);
+					cout << "Enter value " << postfix[i] << endl;
+					cin >> tmp;
+					nums.push_back(tmp);
+					value.Push(tmp);
+				}		
+			}
+		}
+	}
 	return 0;
 }
 
@@ -88,6 +80,8 @@ int TPostfix::Compare(char tmp1)
 		return 2;
 	if (tmp1 == '-' || tmp1 == '+')
 		return 1;
+	if (tmp1 == '(')
+		return 0;
 }
 
 bool TPostfix::CorrectRecord()
@@ -97,31 +91,32 @@ bool TPostfix::CorrectRecord()
 	for (int i = 0; i < infix.size(); i++)
 	{
 		if (infix[i] == '(')
+		{
 			lb++;
+			continue;
+		}
 		else if (infix[i] == ')')
+		{
 			rb++;
+			continue;
+		}
 		if (rb > lb)
 			return false;
 		if (infix[i] == '+' || infix[i] == '-' || infix[i] == '*' || infix[i] == '/')
 			operations++;
-		else if (infix[i] != '+' || infix[i] != '-' || infix[i] != '*' || infix[i] != '/' || infix[i] != '(' || infix[i] != ')')
+		else
 			operands++;
 	}
-	if (infix[0] == '(' || infix[infix.length() - 1] == ')')
-		return true;
-	else if ((IsOperations(infix[0]) == true || IsOperations(infix[infix.size() - 1]) == true))
+	if ((IsOperations(infix[0]) == true || IsOperations(infix[infix.size() - 1]) == true))
 		return false;
-	if (operands == operations + 1)
-		return true;
-	else return false;
-	if (lb == rb)
+	if ((operands == operations + 1) && (lb == rb))
 		return true;
 	else return false;
 }
 
 bool TPostfix::IsOperations(char s)
 {
-	if (s == '+' || s == '-' || s == '*' || s == '/' || s == '(' || s == ')')
+	if (s == '+' || s == '-' || s == '*' || s == '/')
 		return true;
 	return false;
 }
