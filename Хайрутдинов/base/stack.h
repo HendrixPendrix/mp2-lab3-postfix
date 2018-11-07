@@ -47,7 +47,8 @@ public:
 	{
 		if (IsEmpty()  == false)
 			return pMem[top--];
-		else throw "error";
+		else 
+			throw "error";
 	}
 	Telem Back()
 	{

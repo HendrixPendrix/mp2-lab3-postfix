@@ -51,27 +51,55 @@ void TPostfix::SetInfix(string _infix)
 double TPostfix::Calculate()
 {
 	TStack<double> value(postfix.size());
-	vector < double> nums;
+	vector <double> nums;
 	vector <char> sym;
 	double tmp;
+	double tmp1;
+	double tmp2;
+	bool flag = false;
 	for (int i = 0; i < postfix.size(); i++)
 	{
-		if (IsOperand(infix[i]))
+		if (IsOperand(postfix[i]) == true)
 		{
 			for (int j = 0; j < sym.size(); j++)
-			{
-				if (postfix[i] != sym[j])
+				if (postfix[i] == sym[j])
 				{
-					sym.push_back(postfix[i]);
-					cout << "Enter value " << postfix[i] << endl;
-					cin >> tmp;
-					nums.push_back(tmp);
-					value.Push(tmp);
-				}		
+					value.Push(nums[j]);
+					flag = true;
+					break;
+				}
+			if (!flag)
+			{
+				sym.push_back(postfix[i]);
+				cout << "Enter value " << postfix[i] << endl;
+				cin >> tmp;
+				nums.push_back(tmp);
+				value.Push(tmp);
+			}
+			flag = false;
+		}
+		if (IsOperations(postfix[i]) == true)
+		{
+			tmp1 = value.Pop();
+			tmp2 = value.Pop();
+			switch (postfix[i])
+			{
+			case '+':
+				value.Push(tmp1 + tmp2);
+				break;
+			case '-':
+				value.Push(tmp2 - tmp1);
+				break;
+			case '*':
+				value.Push(tmp1*tmp2);
+				break;
+			case'/':
+				value.Push(tmp2 / tmp1);
+				break;
 			}
 		}
 	}
-	return 0;
+	return value.Pop();
 }
 
 int TPostfix::Compare(char tmp1)

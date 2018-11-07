@@ -48,8 +48,26 @@ TEST(TPostfix, can_get_postfix_with_operation_in_begin)
 	TPostfix p("*a+b)");
 	ASSERT_ANY_THROW(p.ToPostfix());
 }
-TEST(TPostfix, cant_create_postfix_with_incorrectinfix)
+TEST(TPostfix, cant_create_postfix_with_incorrect_infix)
 {
 	TPostfix p("a++b");
 	ASSERT_ANY_THROW(p.ToPostfix());
+}
+TEST(TPostfix, can_calculate)
+{
+	ASSERT_NO_THROW(TPostfix p);
+}
+TEST(TPostfix, the_postfix_form_can_calculate_with_repeat_symbols)
+{
+	TPostfix str("(a+b*a)/a-b");
+	str.ToPostfix();
+	EXPECT_EQ(1, str.Calculate());
+	/*Enter a=2 b=3*/
+}
+TEST(TPostfix, the_postfix_form_can_calculate_without_repeat_symbols)
+{
+	TPostfix str("a+b");
+	str.ToPostfix();
+	EXPECT_EQ(5, str.Calculate());
+	/*Enter a=2 b=3*/
 }
