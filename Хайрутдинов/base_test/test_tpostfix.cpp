@@ -59,14 +59,13 @@ TEST(TPostfix, can_calculate)
 }
 TEST(TPostfix, the_postfix_form_can_calculate_with_repeat_symbols)
 {
-	TPostfix str("2 + 3 * 2");
+	TPostfix str("2+3*2");
 	str.ToPostfix();
 	EXPECT_EQ(8, str.Calculate());
 }
 TEST(TPostfix, the_postfix_form_can_calculate_without_repeat_symbols)
 {
-	TPostfix str("2 + 3"); 
+	TPostfix str("2+3"); 
 	str.ToPostfix();
 	EXPECT_EQ(5, str.Calculate());
-	/*Enter a=2 b=3*/
 }
