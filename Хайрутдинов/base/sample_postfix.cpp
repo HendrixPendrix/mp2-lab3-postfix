@@ -6,7 +6,7 @@ using namespace std;
 
 int main()
 {
-	string expression;
+	string expression("a+b");
 	TPostfix postfix;
 	double res;
 	setlocale(LC_ALL, "Russian");
@@ -17,7 +17,6 @@ int main()
 	cout << "Арифметическое выражение: " << postfix.GetInfix() << endl;
 	postfix.ToPostfix();
 	cout << "Постфиксная форма: " << postfix.GetPostfix() << endl;
-	res = postfix.Calculate();
-	cout << "Выражение равно :" << res << endl;
+	cout << "Выражение равно :" << postfix.Calculate() << endl;
 	system("pause");
 }

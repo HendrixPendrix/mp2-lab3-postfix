@@ -28,6 +28,7 @@ public:
 	string GetInfix() { return infix; }
 	string GetPostfix() { return postfix; }
 	void ToPostfix();
+	void Converter(string &str);
 	double Calculate(); // Ввод переменных, вычисление по постфиксной форме
 
 };

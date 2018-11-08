@@ -9,19 +9,19 @@ TEST(TPostfix, can_get_postfix_of_two_arguments_with_brackets)
 {
 	TPostfix p("(a+b)*c");
 	p.ToPostfix();
-	EXPECT_EQ("ab+c*", p.GetPostfix());
+	EXPECT_EQ("a b + c * ", p.GetPostfix());
 }
 TEST(TPostfix, can_get_postfix_of_two_arguments)
 {
 	TPostfix p("a+b");
 	p.ToPostfix();
-	EXPECT_EQ("ab+", p.GetPostfix());
+	EXPECT_EQ("a b + ", p.GetPostfix());
 }
 TEST(TPostfix, can_get_postfix_of_three_arguments)
 {
 	TPostfix p("a+b*c");
 	p.ToPostfix();
-	EXPECT_EQ("abc*+", p.GetPostfix());
+	EXPECT_EQ("a b c * + ", p.GetPostfix());
 }
 TEST(TPostfix, can_set_infix)
 {
@@ -36,7 +36,7 @@ TEST(TPostfix, can_get_postfix_with_different_operations)
 {
 	TPostfix p("a+b*c");
 	p.ToPostfix();
-	EXPECT_EQ("abc*+", p.GetPostfix());
+	EXPECT_EQ("a b c * + ", p.GetPostfix());
 }
 TEST(TPostfix, can_get_postfix_with_closed_bracket)
 {
@@ -56,4 +56,17 @@ TEST(TPostfix, cant_create_postfix_with_incorrect_infix)
 TEST(TPostfix, can_calculate)
 {
 	ASSERT_NO_THROW(TPostfix p);
+}
+TEST(TPostfix, the_postfix_form_can_calculate_with_repeat_symbols)
+{
+	TPostfix str("2 + 3 * 2");
+	str.ToPostfix();
+	EXPECT_EQ(8, str.Calculate());
+}
+TEST(TPostfix, the_postfix_form_can_calculate_without_repeat_symbols)
+{
+	TPostfix str("2 + 3"); 
+	str.ToPostfix();
+	EXPECT_EQ(5, str.Calculate());
+	/*Enter a=2 b=3*/
 }

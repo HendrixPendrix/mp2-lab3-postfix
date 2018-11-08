@@ -2,6 +2,7 @@
 #include "stack.h"
 #include "iostream"
 #include "vector"
+#include <cctype>
 
 void TPostfix::ToPostfix()
 {
@@ -11,9 +12,15 @@ void TPostfix::ToPostfix()
 	postfix = "";
 	for (int i = 0; i < infix.size(); i++)
 	{
-		if (IsOperand(infix[i]) == true)
+		if (isalpha(infix[i]) || isdigit(infix[i]))
 		{
 			postfix += infix[i];
+			while (isalpha(infix[i + 1]) || isdigit(infix[i + 1]))
+			{
+				postfix += infix[i + 1];
+				i++;
+			}
+			postfix += ' ';
 		}
 		else
 			if (infix[i] == '(')
@@ -22,7 +29,10 @@ void TPostfix::ToPostfix()
 				if (infix[i] == ')')
 				{
 					while (op.Back() != '(')
+					{
 						postfix += op.Pop();
+						postfix += ' ';
+					}
 					op.Pop();
 				}
 				else
@@ -35,12 +45,16 @@ void TPostfix::ToPostfix()
 						{
 							postfix += op.Pop();
 							op.Push(infix[i]);
+							postfix += ' ';
 						}
 						else
 							op.Push(infix[i]);
 	}
 	while (op.IsEmpty() == false)
+	{
 		postfix += op.Pop();
+		postfix += ' ';
+	}
 }
 
 void TPostfix::SetInfix(string _infix)
@@ -48,35 +62,51 @@ void TPostfix::SetInfix(string _infix)
 	infix = _infix;
 }
 
+void TPostfix::Converter(string &str)
+{
+	string tmp;
+	for (int i = 0; i < str.size(); i++)
+	{
+		if (IsOperand(str[i]))
+		{
+			cout << "Enter value " << str[i] << endl;
+			cin >> tmp;
+			char sym = str[i];
+			int j = i;
+			while (j < str.size())
+			{
+				if (sym == str[j])
+				{
+					str.erase(j, 1);
+					str.insert(j, tmp);
+					j += tmp.size();
+				}
+				else j++;
+			}
+		}
+	}
+}
+
 double TPostfix::Calculate()
 {
+	Converter(postfix);
 	TStack<double> value(postfix.size());
-	vector <double> nums;
-	vector <char> sym;
-	double tmp;
+	string tmp;
 	double tmp1;
 	double tmp2;
-	bool flag = false;
 	for (int i = 0; i < postfix.size(); i++)
 	{
-		if (IsOperand(postfix[i]) == true)
+		if (postfix[i] == ' ')
+			continue;
+		if (IsOperations(postfix[i]) == false)
 		{
-			for (int j = 0; j < sym.size(); j++)
-				if (postfix[i] == sym[j])
-				{
-					value.Push(nums[j]);
-					flag = true;
-					break;
-				}
-			if (!flag)
+			while (postfix[i] != ' ')
 			{
-				sym.push_back(postfix[i]);
-				cout << "Enter value " << postfix[i] << endl;
-				cin >> tmp;
-				nums.push_back(tmp);
-				value.Push(tmp);
+				tmp += postfix[i];
+				i++;
 			}
-			flag = false;
+			value.Push(atof(tmp.c_str()));
+			tmp = "";
 		}
 		if (IsOperations(postfix[i]) == true)
 		{
@@ -133,7 +163,13 @@ bool TPostfix::CorrectRecord()
 		if (infix[i] == '+' || infix[i] == '-' || infix[i] == '*' || infix[i] == '/')
 			operations++;
 		else
+		{
+			while (isalpha(infix[i + 1]) || isdigit(infix[i + 1]))
+			{
+				i++;
+			}
 			operands++;
+		}
 	}
 	if ((IsOperations(infix[0]) == true || IsOperations(infix[infix.size() - 1]) == true))
 		return false;
