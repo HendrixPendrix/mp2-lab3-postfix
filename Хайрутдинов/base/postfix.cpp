@@ -44,8 +44,13 @@ void TPostfix::ToPostfix()
 						if (Compare(infix[i]) <= Compare(op.Back()))
 						{
 							postfix += op.Pop();
-							op.Push(infix[i]);
+							if (Compare(infix[i]) <= Compare(op.Back()))
+							{
+								postfix += op.Pop();
+								postfix += ' ';
+							}
 							postfix += ' ';
+							op.Push(infix[i]);
 						}
 						else
 							op.Push(infix[i]);
